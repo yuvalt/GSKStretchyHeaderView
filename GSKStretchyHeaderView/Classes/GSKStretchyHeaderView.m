@@ -108,9 +108,15 @@ static const CGFloat kNibDefaultMaximumContentHeight = 240;
 - (void)setMaximumContentHeight:(CGFloat)maximumContentHeight
                   resetAnimated:(BOOL)animated {
     self.maximumContentHeight = maximumContentHeight;
-    [UIView animateWithDuration:animated ? 0.3 : 0 animations:^{
+    
+    if (animated) {
+        [UIView animateWithDuration: 0.3 animations:^{
+            self.scrollView.contentOffset = CGPointMake(0, -(self.maximumContentHeight + self.contentInset.top));
+        }];
+    }
+    else {
         self.scrollView.contentOffset = CGPointMake(0, -(self.maximumContentHeight + self.contentInset.top));
-    }];
+    }
 }
 
 #pragma mark - Overriden methods
